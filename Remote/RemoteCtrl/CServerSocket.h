@@ -140,14 +140,14 @@ public:
 typedef struct MouseEvent {
 	MouseEvent()
 	{
-		nAction = 0;
+		nAction = -1;
 		nButton = -1;
 		ptXY.x = 0;
 		ptXY.y = 0;
 	}
-	WORD nAction;//鼠标的动作:点击、移动、双击
-	WORD nButton;//左键 右键 中键
-	POINT ptXY;//坐标
+	WORD nAction;//鼠标的动作 0、点击  1、双击  2、按下  3、放开
+	WORD nButton;//鼠标的按钮 0、左键  1、右键  2、中键  3、单纯鼠标移动
+	POINT ptXY;  //鼠标的坐标
 }MOUSEEV, * PMOUSEEV;
 
 

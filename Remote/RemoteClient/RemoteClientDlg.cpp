@@ -598,7 +598,7 @@ LRESULT CRemoteClientDlg::OnSendPacket(WPARAM wParam, LPARAM lParam)
 		}
 		break;
 	case 6:
-		{
+		{//画面传输
 			TRACE("####\n");
 			ret = SendCommandPacket(cmd, wParam & 1);
 		}

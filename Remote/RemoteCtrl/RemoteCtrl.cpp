@@ -179,7 +179,6 @@ int MouseEvent()
             nFlags = 8;
             break;
         }
-
         if(nFlags==8)SetCursorPos(mouse.ptXY.x, mouse.ptXY.y);//
         switch (mouse.nAction)
         {
@@ -261,12 +260,12 @@ int MouseEvent()
 int SendScreen()
 {
     CImage screen;//GDI
-    HDC hScreen = ::GetDC(NULL);
+    HDC hScreen = ::GetDC(NULL);//得到当前桌面的DC
     int nBitPerPixel = GetDeviceCaps(hScreen, BITSPIXEL); //获得多少比特的
     int nWidth = GetDeviceCaps(hScreen, HORZRES);//获取宽度;
     int nHeight = GetDeviceCaps(hScreen, VERTRES);//获取高度
     screen.Create(nWidth, nHeight, nBitPerPixel);//创建一个一样的CIMAGE
-    BitBlt(screen.GetDC(), 0, 0, nWidth, nHeight, hScreen, 0, 0, SRCCOPY);
+    BitBlt(screen.GetDC(), 0, 0, nWidth, nHeight, hScreen, 0, 0, SRCCOPY);//拷贝过去
     ReleaseDC(NULL, hScreen);
     HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, 0);//在内存中创建一块可以改变的分区
     if (hMem == NULL) return -1;

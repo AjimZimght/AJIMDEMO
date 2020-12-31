@@ -145,15 +145,14 @@ public:
 typedef struct MouseEvent {
 	MouseEvent()
 	{
-		nAction = 0;
+		nAction = -1;
 		nButton = -1;
 		ptXY.x = 0;
 		ptXY.y = 0;
 	}
-	WORD nAction;//鼠标的动作:点击、移动、双击
-	WORD nButton;//左键 右键 中键
-	POINT ptXY;//坐标
-
+	WORD nAction;//鼠标的动作 0、点击  1、双击  2、按下  3、放开
+	WORD nButton;//鼠标的按钮 0、左键  1、右键  2、中键  3、单纯鼠标移动
+	POINT ptXY;  //鼠标的坐标
 }MOUSEEV, * PMOUSEEV;
 
 //文件结构体
@@ -225,8 +224,8 @@ public:
 		if (m_sock == -1) return -1;
 		//char buffer[1024]="";
 		char* buffer = m_buffer.data();
-		//memset(buffer, 0, BUFFER_SIZE);  不该清0的BUG
-		static size_t index = 0;
+		//memset(buffer, 0, BUFFER_SIZE);  文件接收缺少东西  就在这边，因为他每次执行命令会把原来包里的东西清0
+		static size_t index = 0; //不设为静态的话，会出现下一次去解包时  它又变0的尴尬
 		while (true)
 		{
 			size_t len = recv(m_sock, buffer + index, BUFFER_SIZE - index, 0);
